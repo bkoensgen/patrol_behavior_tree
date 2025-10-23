@@ -1,0 +1,29 @@
+# ROS 2
+build/
+install/
+log/
+
+# C++
+*.o
+*.so
+*.a
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Misc
+.DS_Store

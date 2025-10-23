@@ -3,7 +3,6 @@
 
 namespace patrol_bt {
 
-// MoveForward implementation
 MoveForward::MoveForward(const std::string& name, const BT::NodeConfig& config,
                          rclcpp::Node::SharedPtr node)
   : StatefulActionNode(name, config), node_(node), distance_traveled_(0.0) {
@@ -49,7 +48,6 @@ void MoveForward::onHalted() {
   RCLCPP_INFO(node_->get_logger(), "Forward motion halted");
 }
 
-// RotateRobot implementation
 RotateRobot::RotateRobot(const std::string& name, const BT::NodeConfig& config,
                          rclcpp::Node::SharedPtr node)
   : StatefulActionNode(name, config), node_(node), angle_rotated_(0.0) {
@@ -97,10 +95,9 @@ void RotateRobot::onHalted() {
   RCLCPP_INFO(node_->get_logger(), "Rotation halted");
 }
 
-// IsObstacleClose implementation
 IsObstacleClose::IsObstacleClose(const std::string& name, const BT::NodeConfig& config,
                                  rclcpp::Node::SharedPtr node)
-  : ConditionNode(name, config), node_(node), min_distance_(10.0) {
+  : SyncActionNode(name, config), node_(node), min_distance_(10.0) {
   
   laser_sub_ = node_->create_subscription<sensor_msgs::msg::LaserScan>(
     "/scan", 10,
@@ -117,11 +114,12 @@ void IsObstacleClose::laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr
 }
 
 BT::NodeStatus IsObstacleClose::tick() {
-  if (!getInput("distance", threshold_distance_)) {
-    threshold_distance_ = 0.5;
+  double threshold;
+  if (!getInput("distance", threshold)) {
+    threshold = 0.5;
   }
   
-  if (min_distance_ < threshold_distance_) {
+  if (min_distance_ < threshold) {
     RCLCPP_WARN(node_->get_logger(), "Obstacle at %.2f m", min_distance_);
     return BT::NodeStatus::SUCCESS;
   }

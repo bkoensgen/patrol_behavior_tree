@@ -48,12 +48,17 @@ install(DIRECTORY launch/
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   
-  ament_add_gtest(test_bt_actions test/test_bt_actions.cpp)
+  ament_add_gtest(test_bt_actions 
+    test/test_bt_actions.cpp
+    src/bt_actions.cpp
+  )
   
   if(TARGET test_bt_actions)
-    target_link_libraries(test_bt_actions patrol_bt_node)
+    target_include_directories(test_bt_actions PUBLIC include)
     ament_target_dependencies(test_bt_actions
       rclcpp
+      geometry_msgs
+      sensor_msgs
       behaviortree_cpp
     )
   endif()

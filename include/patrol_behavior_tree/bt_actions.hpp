@@ -7,7 +7,6 @@
 
 namespace patrol_bt {
 
-// Move robot forward by specified distance
 class MoveForward : public BT::StatefulActionNode {
 public:
     MoveForward(const std::string& name, const BT::NodeConfig& config,
@@ -29,7 +28,6 @@ private:
     rclcpp::Time start_time_;
 };
 
-// Rotate robot by specified angle
 class RotateRobot : public BT::StatefulActionNode {
 public:
     RotateRobot(const std::string& name, const BT::NodeConfig& config,
@@ -51,8 +49,7 @@ private:
     rclcpp::Time start_time_;
 };
 
-// Check for obstacles within threshold distance
-class IsObstacleClose : public BT::ConditionNode {
+class IsObstacleClose : public BT::SyncActionNode {
 public:
     IsObstacleClose(const std::string& name, const BT::NodeConfig& config,
                     rclcpp::Node::SharedPtr node);
