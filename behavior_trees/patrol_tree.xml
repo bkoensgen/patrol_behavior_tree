@@ -1,0 +1,20 @@
+<root BTCPP_format="4">
+  <BehaviorTree ID="PatrolBehavior">
+    <ReactiveSequence name="MainLoop">
+      
+      <Fallback name="ObstacleHandler">
+        <Inverter>
+          <Condition ID="IsObstacleClose" distance="0.5"/>
+        </Inverter>
+        
+        <Sequence name="AvoidanceSequence">
+          <Action ID="RotateRobot" angle="90"/>
+          <Action ID="MoveForward" distance="0.5"/>
+        </Sequence>
+      </Fallback>
+      
+      <Action ID="MoveForward" distance="1.0"/>
+      
+    </ReactiveSequence>
+  </BehaviorTree>
+</root>
